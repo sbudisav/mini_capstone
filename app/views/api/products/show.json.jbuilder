@@ -1,5 +1,6 @@
-  json.id @products.id
-  json.name @products.name
-  json.price @products.price
-  json.image_url @products.image_url
-  json.description @products.description
+  json.id @product.id
+  json.name @product.name
+  json.price @product.price
+  json.image_url @product.image_url
+  json.description @product.description
+  json.home "http://localhost:3000/api/products"
