@@ -1,4 +1,4 @@
-class Api::ProductsController < ApplicationController
+class Api::ProductsController < ApplicationController 
  
   def index
     @products = Product.all
@@ -10,7 +10,8 @@ class Api::ProductsController < ApplicationController
                             name:params[:name],
                             price:params[:price],
                             image_url:params[:image_url],
-                            description:params[:description]
+                            description:params[:description],
+                            stock:params[:stock]                           
                             )
     @product.save
     render "show.json.jbuilder"
@@ -27,6 +28,7 @@ class Api::ProductsController < ApplicationController
     @product.price = params[:price] || @product.price
     @product.image_url = params[:image_url] || @product.image_url
     @product.description = params[:description] || @product.description
+    @product.stock = params[:stock] || @product.stock 
     @product.save
     render "show.json.jbuilder"
   end
@@ -34,7 +36,7 @@ class Api::ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     @product.destroy
-    render json: {message: "Recipe successfully destroyed"}
+    render json: {message: "Product successfully destroyed"}
   end
 
 end
