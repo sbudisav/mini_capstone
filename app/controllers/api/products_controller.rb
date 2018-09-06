@@ -2,6 +2,25 @@ class Api::ProductsController < ApplicationController
  
   def index
     @products = Product.all
+
+    search_term = params[:search]
+    if search_term 
+      @products = @products.where(
+                                  "name iLIKE ?",
+                                  "%#{search_term}%"
+                                  )
+    end
+
+  sorting_attribute = params[:sort]
+  sorting_order = params[:order]
+
+  if sorting_attribute && sorting_order
+    @products = @products.order(sorting_attribute => sorting_order)
+  elsif sorting_attribute
+    @products = @products.order(sorting_attribute)
+  end
+    
+
     render 'index.json.jbuilder'
   end
 
@@ -13,8 +32,11 @@ class Api::ProductsController < ApplicationController
                             description:params[:description],
                             stock:params[:stock]                           
                             )
-    @product.save
-    render "show.json.jbuilder"
+    if @product.save
+      render "show.json.jbuilder"
+    else
+      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -29,8 +51,12 @@ class Api::ProductsController < ApplicationController
     @product.image_url = params[:image_url] || @product.image_url
     @product.description = params[:description] || @product.description
     @product.stock = params[:stock] || @product.stock 
-    @product.save
-    render "show.json.jbuilder"
+  
+    if @product.save
+      render "show.json.jbuilder"
+    else
+      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+    end
   end
 
   def destroy

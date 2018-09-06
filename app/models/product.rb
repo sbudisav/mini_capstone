@@ -1,4 +1,13 @@
 class Product < ApplicationRecord
+  validates :name, presence: true
+  validates :name, uniqueness: true
+  validates :description, presence: true
+  validates :description, length: {in: 2..200}
+  validates :image_url, uniqueness: true
+  validates :price, presence: true
+  validates :price, numericality: {greater_than: 0}
+
+
   def tax
     price * 0.08
   end
