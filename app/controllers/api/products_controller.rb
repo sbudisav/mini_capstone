@@ -2,7 +2,7 @@ class Api::ProductsController < ApplicationController
  
   def index
     @products = Product.all
-
+ 
     search_term = params[:search]
     if search_term 
       @products = @products.where(
@@ -10,7 +10,7 @@ class Api::ProductsController < ApplicationController
                                   "%#{search_term}%"
                                   )
     end
-
+  
   sorting_attribute = params[:sort]
   sorting_order = params[:order]
 
@@ -29,6 +29,7 @@ class Api::ProductsController < ApplicationController
                             name:params[:name],
                             price:params[:price],
                             image_url:params[:image_url],
+                            images:params[:images],
                             description:params[:description],
                             stock:params[:stock]                           
                             )
@@ -51,6 +52,7 @@ class Api::ProductsController < ApplicationController
     @product.image_url = params[:image_url] || @product.image_url
     @product.description = params[:description] || @product.description
     @product.stock = params[:stock] || @product.stock 
+    @product.supplier_id = params[:supplier_id] || @product.supplier_id
   
     if @product.save
       render "show.json.jbuilder"

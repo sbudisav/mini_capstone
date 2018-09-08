@@ -4,8 +4,9 @@ class Product < ApplicationRecord
   validates :description, presence: true
   validates :description, length: {in: 2..200}
   validates :image_url, uniqueness: true
-  validates :price, presence: true
   validates :price, numericality: {greater_than: 0}
+
+  belongs_to :supplier 
 
 
   def tax

@@ -8,10 +8,15 @@
   json.description product.description
   json.stock product.stock
   json.is_instock product.is_instock
+  json.supplier_id product.supplier_id
   json.link "http://localhost:3000/api/products/#{product.id}"
 
   json.formatted do 
     json.price number_to_currency(product.price)
     json.tax number_to_currency(product.tax)
     json.total number_to_currency(product.total)
+  end
+
+  json.supplier do 
+    json.partial! product.supplier, partial: 'supplier', as: :supplier
   end
