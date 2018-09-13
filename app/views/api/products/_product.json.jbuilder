@@ -16,7 +16,7 @@
     json.tax number_to_currency(product.tax)
     json.total number_to_currency(product.total)
   end
-
+ 
   json.supplier do 
     json.partial! product.supplier, partial: 'supplier', as: :supplier
   end

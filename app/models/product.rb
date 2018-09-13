@@ -1,4 +1,4 @@
-class Product < ApplicationRecord
+class Product < ApplicationRecord 
   validates :name, presence: true
   validates :name, uniqueness: true
   validates :description, presence: true
@@ -7,6 +7,7 @@ class Product < ApplicationRecord
   validates :price, numericality: {greater_than: 0}
 
   belongs_to :supplier 
+  has_many :orders
 
 
   def tax
