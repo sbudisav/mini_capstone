@@ -26,12 +26,12 @@ class Api::ProductsController < ApplicationController
 
   def create
     @product = Product.new(
-                            name:params[:name],
-                            price:params[:price],
-                            image_url:params[:image_url],
-                            images:params[:images],
-                            description:params[:description],
-                            stock:params[:stock]                           
+                            name: params[:name],
+                            price: params[:price],
+                            image_url: params[:image_url],
+                            images: params[:images],
+                            description: params[:description],
+                            stock: params[:stock]                           
                             )
     if @product.save
       render "show.json.jbuilder"

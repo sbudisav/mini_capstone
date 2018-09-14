@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
     post "/sessions" => "sessions#create"
 
+    post "/orders" => "orders#create"
+
     get "/suppliers" => 'suppliers#index'
     post "/suppliers" => 'suppliers#create'
     get "/suppliers/:id" => 'suppliers#show'

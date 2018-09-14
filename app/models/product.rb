@@ -8,9 +8,9 @@ class Product < ApplicationRecord
 
   belongs_to :supplier 
   has_many :orders
+ 
 
-
-  def tax
+  def tax 
     price * 0.08
   end
 
