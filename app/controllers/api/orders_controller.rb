@@ -1,4 +1,5 @@
 class Api::OrdersController < ApplicationController
+  before_action :authenticate_user, only: :[:index, :create]
 
   def index
     @orders = Order.all
@@ -8,10 +9,10 @@ class Api::OrdersController < ApplicationController
 
   def create 
 
-    @order = Order.new(
+    @order = Order.new( 
                         product_id: params[:product_id],
                         quantity: params[:quantity],
-                        user_id: current_user.id 
+                        user_id: current_user.id  
                         )
     product = Product.find_by(id: params[:product_id])
     #  this can be rewritten as 

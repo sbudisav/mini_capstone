@@ -7,11 +7,16 @@ class Product < ApplicationRecord
   validates :price, numericality: {greater_than: 0}
 
   belongs_to :supplier 
-  has_many :orders
+  has_many :carted_products
+  has_many :orders, through: :carted_products
+ 
+  # has_many :product_catagories
+  # has_many :catagories, through: :product_catagories
+  # come back to this
  
 
   def tax 
-    price * 0.08
+    price * 0.08 
   end
 
   def total
