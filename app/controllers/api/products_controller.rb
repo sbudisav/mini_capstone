@@ -1,5 +1,5 @@
 class Api::ProductsController < ApplicationController 
-  before_action :authenticate_admin, except: [:index, :show]
+  #  before_action :authenticate_admin, except: [:index, :show]
  
   def index
     @products = Product.all
@@ -26,25 +26,23 @@ class Api::ProductsController < ApplicationController
   end
 
   def create
-    if current_user && current_user.admin
-      #this checks if current_user is logged in first
-      #You can't call a method on a class if it returns nill, this is why you have to check both user and user.admin
       @product = Product.new(
                               name: params[:name],
                               price: params[:price],
                               image_url: params[:image_url],
-                              images: params[:images],
+                              image_url: params[:image_url],
                               description: params[:description],
-                              stock: params[:stock]                            
+                              stock: params[:stock],
+                              supplier_id: params[:supplier_id]                           
                               )
       if @product.save
         render "show.json.jbuilder"
       else
+        p "***********************"
+        p @product.errors.full_messages
+        p "***********************"
         render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
       end
-    else 
-      render json: {}, status: :unauthorized
-    end
   end
 
   def show

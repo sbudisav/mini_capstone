@@ -1,5 +1,7 @@
 class Api::OrdersController < ApplicationController
-  before_action :authenticate_user, only: :[:index, :create]
+  before_action :authenticate_user, only: [:index, :create]
+
+
 
   def index
     @orders = Order.all
@@ -9,19 +11,17 @@ class Api::OrdersController < ApplicationController
 
   def create 
 
-    @order = Order.new( 
-                        product_id: params[:product_id],
-                        quantity: params[:quantity],
-                        user_id: current_user.id  
-                        )
-    product = Product.find_by(id: params[:product_id])
-    #  this can be rewritten as 
-    #  product = @order.product as an order can have many products 
-    price = product.price
-    @subtotal = price * (@order.quantity)
-    # @order.subtotal if you want it to be a function of the order
+    @all_carted_products = CartedProduct.where(user_id: current_user.id)
+    @subtotal = 0
+    @all_carted_products.each do |carted_index|
+      @subtotal += (carted_index.product.price * carted_index.quantity)
+      carted_index.status = "purchased"
+    end
+
     @tax = (@subtotal * 0.08)
     @total = (@subtotal + @tax)
+
+    @order = Order.new(user_id: current_user.id)
 
     if @order.save
       render "_order.json.jbuilder"

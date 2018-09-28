@@ -1,9 +1,10 @@
-json.product_id order.product_id
-json.quantity order.quantity
-json.user_id order.user_id
-json.subtotal subtotal
-json.tax tax
-json.total total
+json.user_id @order.user_id
+json.name @order.user.name
+json.items @all_carted_products
+json.subtotal @subtotal
+json.tax @tax
+json.total @total
+
 
 =begin
 

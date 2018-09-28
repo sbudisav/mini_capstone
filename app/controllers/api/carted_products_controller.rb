@@ -2,7 +2,7 @@ class Api::CartedProductsController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @carted_products = CartedProduct.where(user_id: current_user.id, status:"carted")
+    @orders = CartedProduct.where(user_id: current_user.id, status:"carted")
     render 'index.json.jbuilder'
   end
 
@@ -13,6 +13,7 @@ class Api::CartedProductsController < ApplicationController
                                         user_id: current_user.id,
                                         status: "carted"
                                         )
+
     @carted_product.save
 
   end
